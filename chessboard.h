@@ -1,54 +1,48 @@
-#ifndef CHESSBOARD_H
-#define CHESSBOARD_H
+﻿//
+// Created by RenYi on 2017/6/17.
+//
 
-#include <QWidget>
-#include <QPixmap>
-#include <QPainter>
-#include <iostream>
-#include <string>
+#ifndef WIDGET_CHESSBOARD_H
+#define WIDGET_CHESSBOARD_H
+
+
 #include <vector>
-using namespace std;
+#include <string>
+#include "constants.h"
+#include "ChessItem.h"
 
+using namespace std;
 const int ChessBoardWidth = 15;
 
-struct ChessItem {
-    ChessItem() {}
-    ChessItem(ChessItem &it) : cx(it.cx), cy(it.cy), player(it.player) {}
-    ChessItem(int cx, int cy, int player) : cx(cx), cy(cy), player(player) {}
-    void set(int cx, int cy, int player) {
-        this->cx = cx;
-        this->cy = cy;
-        this->player = player;
-    }
-    int cx, cy, player;
-};
-
-class ChessBoard : public QWidget {
-    Q_OBJECT
+class ChessBoard {
 public:
-    explicit ChessBoard(QWidget *parent = nullptr);
-    void clear();
-    void play(bool isAIPlayer);
-    void win(int winner);
+    ChessBoard();
 
-    const std::vector<std::vector<int>> & getChessBoard() {
-        return currentChessBoard;
-    }
-
-    void paintEvent(QPaintEvent *e);
+    ChessBoard(const ChessBoard &board);
 
     ChessBoard &operator+=(const ChessItem &next);
 
-private:
-    std::vector<std::vector<int>> currentChessBoard;
-    bool gameStatus = false, isAI;
-    int winner = -1;
+    ChessBoard &operator-=(const ChessItem &next);
 
-    string dispText;
-
-    void updateChess(int x, int y, int val) {
-        currentChessBoard[x][y] = val;
+    const vector<vector<ItemType>> &getChessBoard() const {
+        return currentChessBoard;
     }
+
+    bool isBlock(const ChessItem point)const;
+
+    bool isEmpty(const ChessItem point)const;
+
+    bool isItem(const ChessItem point)const;
+
+protected:
+    vector<vector<ItemType >> currentChessBoard;
+
+    void updateChess(int x, int y, ItemType val);
+
+    virtual void set(const ChessItem &next);
+
+    void remove(const ChessItem &next);
+
 };
 
-#endif // CHESSBOARD_H
+#endif //WIDGET_CHESSBOARD_H

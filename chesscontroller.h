@@ -2,15 +2,15 @@
 #define CHESSCONTROLLER_H
 
 #include <vector>
-#include "chessboard.h"
+#include "realboard.h"
 
 class ChessController {
 public:
-    ChessController(ChessBoard &cb) : cb(cb), curChessBoard(cb.getChessBoard()) {}
+    ChessController(RealBoard &cb) : cb(cb), curChessBoard(cb.getChessBoard()) {}
     void startGame(bool isAIPlayer);
     void nextStep(int cx, int cy);
 private:
-    ChessBoard &cb;
+    RealBoard &cb;
     const std::vector<std::vector<int>>& curChessBoard;
     bool judge();
     int judgeSingleDirect(int dx, int dy) const;

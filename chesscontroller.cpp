@@ -47,8 +47,10 @@ ChessItem ChessController::AIgo() {
 
 void ChessController::nextStep(int cx, int cy) {
     if (!isPlaying) { return; }
+    char a[10];
+    sprintf(a,"%d",cy);
     if (cx < 0 || cy < 0 || cx >= ChessBoardWidth || cy >= ChessBoardWidth) { return; }
-    if (curChessBoard[cx][cy] != -1) { return; }
+    if (curChessBoard[cx][cy] != EMPTY) { return; }
     nextStepItem.set(cx, cy, currentPlayer);
     cb += nextStepItem;
     if (judge()) { return; }

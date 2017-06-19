@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "chessboard.h"
+#include "realboard.h"
 #include "chesscontroller.h"
 
 namespace Ui {

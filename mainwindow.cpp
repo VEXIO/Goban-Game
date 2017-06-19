@@ -1,49 +1,48 @@
+#if _MSC_VER >= 1600    // VC2010
+#pragma execution_character_set("utf-8")
+#endif
+
 #include "mainwindow.h"
 
 #include <QAction>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QToolBar>
-#include <QWidget>
 #include <QMouseEvent>
-#include <QString>
-#include <string>
-#include <iostream>
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
-{
+        QMainWindow(parent) {
     setWindowFlags(Qt::WindowMinimizeButtonHint);
     setFixedSize(485, 600);
     // chessboard 490 557
-    setWindowTitle(tr("äº”å­æ£‹æ¸¸æˆ"));
+    setWindowTitle(tr("Îå×ÓÆåÓÎÏ·"));
 
-    humanPlayAction = new QAction("åŒäººæ¸¸æˆ", this);
+    humanPlayAction = new QAction("Ë«ÈËÓÎÏ·", this);
     humanPlayAction->setShortcuts(QKeySequence::New); // Ctrl+N
     connect(humanPlayAction, &QAction::triggered, this, &MainWindow::startHuman);
 
-    AIPlayAction = new QAction("äººæœºå¯¹æˆ˜", this);
+    AIPlayAction = new QAction("ÈË»ú¶ÔÕ½", this);
     AIPlayAction->setShortcuts(QKeySequence::SelectAll); // Ctrl+A
     connect(AIPlayAction, &QAction::triggered, this, &MainWindow::startAI);
 
-    QMenu *file = menuBar()->addMenu(tr("&å¼€å§‹"));
+    QMenu *file = menuBar()->addMenu(tr("&¿ªÊ¼"));
     file->addAction(humanPlayAction);
     file->addAction(AIPlayAction);
 
-    QToolBar *toolBar = addToolBar(tr("&å¼€å§‹"));
+    QToolBar *toolBar = addToolBar(tr("&¿ªÊ¼"));
     toolBar->addAction(humanPlayAction);
     toolBar->addAction(AIPlayAction);
 
     setStyleSheet("QMainWindow {"
-                      "background-image: url(:/images/chessBoard);"
-                      "background-repeat:no-repeat;"
-                      "background-position: bottom left"
-                  "}");
+                          "background-image: url(:/images/chessBoard);"
+                          "background-repeat:no-repeat;"
+                          "background-position: bottom left"
+                          "}");
 }
 
-void MainWindow::mouseReleaseEvent(QMouseEvent *e)
-{
+void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
     float width = 32.2;
     float chessWidth = 0.95 * width;
     float topX = 17.f - width / 2 + (width - chessWidth) / 2;
@@ -55,17 +54,15 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
     update();
 }
 
-void MainWindow::startHuman()
-{
-    QMessageBox::information(this, tr("Information"), tr("å¼€å§‹åŒäººæ¸¸æˆ"));
+void MainWindow::startHuman() {
+    QMessageBox::information(this, tr("Information"), tr("¿ªÊ¼Ë«ÈËÓÎÏ·"));
     cc->startGame(false);
 }
-void MainWindow::startAI()
-{
-    QMessageBox::information(this, tr("Information"), tr("å¼€å§‹äººæœºå¯¹æˆ˜"));
+
+void MainWindow::startAI() {
+    QMessageBox::information(this, tr("Information"), tr("¿ªÊ¼ÈË»ú¶ÔÕ½"));
     cc->startGame(true);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
 }

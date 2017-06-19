@@ -27,12 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     chessboard.cpp \
-    chesscontroller.cpp
+    chesscontroller.cpp \
+    realboard.cpp \
+    virtualboard.cpp \
+    chessitem.cpp
 
 HEADERS += \
         mainwindow.h \
     chessboard.h \
-    chesscontroller.h
+    chesscontroller.h \
+    realboard.h \
+    virtualboard.h \
+    chessitem.h
 
 FORMS +=
 
