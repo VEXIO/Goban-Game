@@ -2,6 +2,7 @@
 // Created by RenYi on 2017/6/17.
 //
 
+#include <QCoreApplication>
 #include <ctime>
 #include "AI.h"
 #include "helpers.h"
@@ -81,7 +82,9 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
             break;
         }
     }
-    //
+
+    QCoreApplication::processEvents();
+
     if (deep == DEEP) {
         // cout << 1;
     }
