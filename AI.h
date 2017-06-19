@@ -24,9 +24,6 @@ public:
 int ABcut=0;
 private:
     list<ChessItem> genCandidate(const VirtualBoard &thisBoard,ItemType itemType);
-
-
-
 };
 
 

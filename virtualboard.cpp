@@ -85,32 +85,32 @@ void VirtualBoard::set(const ChessItem &next) {
     }
 }
 
-int VirtualBoard::calcTypeScore(int totalItems, int firstEmpty, int blockType) {
+int VirtualBoard::calcTypeScore(int totalItems, int firstEmpty, int blockType, bool isEmpty) {
     if (totalItems >= 10)
         return FIVE;
     if (firstEmpty == 0) {
         if (totalItems >= 5) {
-            return FIVE*2; // XOOOOOX
+            return FIVE; // XOOOOOX
         }
         if (blockType == 0) {
             switch (totalItems) {
                 case 2:
-                    return TWO*1.5; // OO
+                    return TWO; // OO
                 case 3:
-                    return THREE*1.5; // OOO
+                    return THREE; // OOO
                 case 4:
-                    return FOUR*1.5; // OOOO
+                    return FOUR; // OOOO
                 default:
                     return 0;
             }
         } else if (blockType == 1) {
             switch (totalItems) {
                 case 2:
-                    return BLOCKED_TWO*1.5; // XOO
+                    return isEmpty ? 0 : ONE; // XOO
                 case 3:
-                    return BLOCKED_THREE*1.5; // XOOO
+                    return TWO; // XOOO
                 case 4:
-                    return BLOCKED_FOUR*1.5; // XOOOO
+                    return THREE; // XOOOO
                 default:
                     return 0;
             }
@@ -124,38 +124,27 @@ int VirtualBoard::calcTypeScore(int totalItems, int firstEmpty, int blockType) {
                 case 4:
                     return THREE; // OEOO
                 case 5:
-                    return BLOCKED_FOUR; // OEOOO
+                    return BLOCKFOUR; // OEOOO
                 default:
                     return 0;
             }
-        } else if (blockType == 1) {
+        } else if (blockType == 1 || blockType == -1) {
             switch (totalItems) {
                 case 4:
-                    return BLOCKED_THREE; // XOEOO
+                    return isEmpty ? 0 : TWO; // XOEOO
                 case 5:
-                    return BLOCKED_FOUR; // XOEOOO
+                    return BLOCKFOUR; // XOEOOO
                 case 6:
-                    return FOUR/2; // XOEOOOO
-                default:
-                    return 0;
-            }
-        } else if (blockType == -1) {
-            switch (totalItems) {
-                case 4:
-                    return BLOCKED_THREE; //  OEOOX
-                case 5:
-                    return BLOCKED_FOUR; //  OEOOOX
-                case 6:
-                    return FOUR/2; //  OEOOOOX
+                    return BLOCKFOUR; // XOEOOOO
                 default:
                     return 0;
             }
         } else if (blockType == 2) {
             switch (totalItems) {
                 case 5:
-                    return BLOCKED_FOUR; // XOEOOOX
+                    return BLOCKFOUR; // XOEOOOX
                 case 6:
-                    return BLOCKED_FOUR; // XOEOOOOX
+                    return BLOCKFOUR; // XOEOOOOX
                 default:
                     return 0;
             }
@@ -163,94 +152,36 @@ int VirtualBoard::calcTypeScore(int totalItems, int firstEmpty, int blockType) {
     } else if (firstEmpty == 3) {
         if (totalItems >= 8) {
             return FIVE; // XOOEOOOOOX
+        } else if (totalItems >= 5) {
+            return BLOCKFOUR;
+        } else {
+            return 0;
         }
-        if (blockType == 0) {
-            switch (totalItems) {
-                case 5:
-                    return BLOCKED_FOUR; //OOEOO
-                case 6:
-                    return BLOCKED_FOUR; //OOEOOO
-                case 7:
-                    return FOUR/4; //OOEOOOO
-                default:
-                    return 0;
-            }
-        } else if (blockType == 1) {
-            switch (totalItems) {
-                case 5:
-                    return BLOCKED_FOUR; // XOOEOO
-                case 6:
-                    return BLOCKED_FOUR; // XOOEOOO
-                case 7:
-                    return FOUR/4; // XOOEOOOO
-                default:
-                    return 0;
-            }
-        } else if (blockType == -1) {
-            return BLOCKED_FOUR;
-        } else if (blockType == 2) {
-            switch (totalItems) {
-                case 5:
-                    return BLOCKED_FOUR;// XOOEOOX
-                case 6:
-                    return BLOCKED_FOUR;// XOOEOOOX
-                case 7:
-                    return BLOCKED_FOUR;// XOOEOOOOX
-                default:
-                    return 0;
-            }
-        }
+
     } else if (firstEmpty == 4) {
         if (totalItems >= 9) {
             return FIVE; // XOOOEOOOOOX
         }
-        if (blockType == 0) {
+        if (blockType <= 2) {
             switch (totalItems) {
                 case 7:
-                    return BLOCKED_THREE; // OOOEOOO
+                    return BLOCKFOUR; // OOOEOOO
                 case 8:
-                    return FOUR/4; //OOOEOOOO
+                    return FOUR; //OOOEOOOO
                 default:
                     return 0;
             }
-        } else if (blockType == 1) {
-            switch (totalItems) {
-                case 7:
-                    return BLOCKED_THREE; // XOOOEOOO
-                case 8:
-                    return FOUR/4; //XOOOEOOOO
-                default:
-                    return 0;
-            }
-        } else if (blockType == -1) {
-            switch (totalItems) {
-                case 7:
-                    return BLOCKED_THREE; // OOOEOOOX
-                case 8:
-                    return BLOCKED_FOUR; //OOOEOOOOX
-                default:
-                    return 0;
-            }
-        } else if (blockType == 2) {
-            switch (totalItems) {
-                case 7:
-                    return BLOCKED_THREE; // OOOEOOO
-                case 8:
-                    return FOUR/4; //OOOEOOOO
-                default:
-                    return 0;
-            }
+        } else {
+            return BLOCKFOUR;
         }
     } else if (firstEmpty == 5) {
         if (totalItems >= 10) {
             return FIVE; // OOOOEOOOOO
         }
-        if (blockType == 0) {
-            return FOUR/4; //OOOOEOOOO
-        } else if (blockType == 1 || blockType == -1) {
-            return FOUR/4; //XOOOOEOOOO
-        } else if (blockType == 2) {
-            return BLOCKED_FOUR; //XOOOOEOOOOX
+        if (blockType <= 2) {
+            return FOUR; //OOOOEOOOO
+        } else {
+            return BLOCKFOUR; //XOOOOEOOOOX
         }
     }
     return 0;
@@ -325,12 +256,12 @@ int VirtualBoard::evalScoreInOneDir(ChessItem item, int updateDir) {
                 block[i] = -block[i];
             }
         }
-        int thisScore = calcTypeScore(totalPoints, emptyPos, blockNum);
+        int thisScore = calcTypeScore(totalPoints, emptyPos, blockNum, isEmpty(ChessItem(item.cx, item.cy)));
         score = max(score, thisScore);
     }
-    if(!score){
-        for (int i = 0; i <=1; i++) {
-            if(isItem(ChessItem(item.cx+dirX[i],item.cx+dirY[i]))){
+    if (!score) {
+        for (int i = 0; i <= 1; i++) {
+            if (isItem(ChessItem(item.cx + dirX[i], item.cy + dirY[i]))) {
                 score++;
             }
         }
@@ -339,7 +270,7 @@ int VirtualBoard::evalScoreInOneDir(ChessItem item, int updateDir) {
 
 int VirtualBoard::evalGlobalScore(ItemType itemType) const {
     int maxScore[2] = {0};
-    int maxi,maxj;
+    int maxi, maxj;
     for (int i = 0; i < ChessBoardWidth; i++) {
         for (int j = 0; j < ChessBoardWidth; j++) {
             if (!isEmpty(ChessItem(i, j))) {
@@ -347,10 +278,10 @@ int VirtualBoard::evalGlobalScore(ItemType itemType) const {
                     maxScore[currentChessBoard[i][j]]) {
                     maxScore[currentChessBoard[i][j]] =
                             getScores(currentChessBoard[i][j])[i][j].getTotal();
-                    if(itemType==BLACK){
-                        maxi=i;
-                        maxj=j;
-                    }
+//                    if (itemType == BLACK) {
+//                        maxi = i;
+//                        maxj = j;
+//                    }
                 }
             }
 //            else {
@@ -361,7 +292,7 @@ int VirtualBoard::evalGlobalScore(ItemType itemType) const {
 //            }
         }
     }
-    return 1.2*maxScore[itemType] - maxScore[reverseItemType(itemType)];
+    return maxScore[itemType] * 8 - maxScore[reverseItemType(itemType)];
 }
 
 ItemType VirtualBoard::getComPointType() const {
@@ -372,7 +303,7 @@ ItemType VirtualBoard::getHumPointType() const {
     return humPointType;
 }
 
-void VirtualBoard::print(bool showScores ) {
+void VirtualBoard::print(bool showScores) {
     cout << "   ";
     for (int j = 0; j < ChessBoardWidth; j++) {
         cout << j << " ";
@@ -408,7 +339,7 @@ void VirtualBoard::print(bool showScores ) {
             }
             cout << endl;
         }
-        cout << evalGlobalScore(BLACK)<< " "<< evalGlobalScore(WHITE) << endl;
+        cout << evalGlobalScore(BLACK) << " " << evalGlobalScore(WHITE) << endl;
     }
 }
 
@@ -416,16 +347,10 @@ void Score::setDirScore(const int &dir, const int &score) {
     int delta = score - dirScore[dir];
     dirScore[dir] = score;
     total += delta;
-    if (total <= BLOCKED_FOUR && total >= THREE * 2) { //double three
-        convertTotal = FOUR*0.8;
-    } else if (total < FOUR/4 && total >= BLOCKED_FOUR) {
-        if (total >= BLOCKED_FOUR && total < (BLOCKED_FOUR + THREE)) {
-            convertTotal = THREE;
-        } else if (total >= BLOCKED_FOUR + THREE && total < BLOCKED_FOUR * 2) {
-            convertTotal = FOUR;
-        } else if (total >= BLOCKED_FOUR * 2) {
-            convertTotal = FOUR * 2;
-        }
+    if ((total / THREE) % 10 + (total / BLOCKFOUR) % 10 >= 2) {
+        convertTotal = FOUR;
+    } else if ((total / BLOCKFOUR) % 10 == 1) {
+        convertTotal = THREE;
     } else {
         convertTotal = total;
     }

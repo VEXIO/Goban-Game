@@ -14,14 +14,11 @@ enum ItemType {
 
 enum TypeScore {
     ONE = 10,
-    TWO = 1000,
-    THREE = 20000,
-    FOUR = 1000000,
-    FIVE = 50000000,
-    BLOCKED_ONE = 1,
-    BLOCKED_TWO = 30,
-    BLOCKED_THREE = 1000,
-    BLOCKED_FOUR = 400000
+    TWO = 100,
+    THREE = 1000,
+    BLOCKFOUR = 10000,
+    FOUR = 100000,
+    FIVE = 10000000
 };
 
 const int MAX = 1000000000;

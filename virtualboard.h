@@ -68,7 +68,7 @@ private:
 
     int evalScoreInOneDir(ChessItem item, int updateDir);
 
-    int calcTypeScore(int totalItems, int firstEmpty, int blockType);
+    int calcTypeScore(int totalItems, int firstEmpty, int blockType,bool isEmpty);
 
 };
 
