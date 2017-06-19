@@ -19,9 +19,6 @@ public:
 
     int negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, ItemType itemType, vector<ChessItem> &thisBestItems,vector<ChessItem>& steps);
 
-    int searchCount=0;
-// debug
-int ABcut=0;
 private:
     list<ChessItem> genCandidate(const VirtualBoard &thisBoard,ItemType itemType);
 };

@@ -44,19 +44,19 @@ public:
 
     VirtualBoard(const VirtualBoard &board);
 
-    const vector<vector<Score>> &getScores(ItemType itemType) const;
+//    VirtualBoard(const vector<std::vector<ItemType >> &board);
+
+    const vector<vector<Score> > &getScores(ItemType itemType) const;
 
     void set(const ChessItem &next);
+
+    void clear();
 
     int evalGlobalScore(ItemType itemType) const;
 
     ItemType getComPointType() const;
 
     ItemType getHumPointType() const;
-
-    static ItemType reverseItemType(ItemType itemType) {
-        return itemType == BLACK ? WHITE : BLACK;
-    }
 
     void print(bool showScores = false);
 

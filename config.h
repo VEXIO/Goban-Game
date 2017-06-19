@@ -6,5 +6,6 @@
 #define GOBANGAME_CONFIG_H
 
 const int DEEP=5;
+const int EVAL_BIAS=8;
 
 #endif //GOBANGAME_CONFIG_H

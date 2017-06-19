@@ -3,6 +3,8 @@
 //
 
 #include "virtualboard.h"
+#include "config.h"
+#include "chessboard.h"
 
 VirtualBoard::VirtualBoard(ItemType AIColor) : ChessBoard() {
     if (AIColor == BLACK) {
@@ -37,6 +39,7 @@ VirtualBoard::VirtualBoard(const VirtualBoard &board) : ChessBoard(board) {
     }
 
 }
+
 
 const vector<vector<Score>> &VirtualBoard::getScores(ItemType itemType) const {
     return itemType == BLACK ? blackScores : whiteScores;
@@ -257,7 +260,7 @@ int VirtualBoard::evalScoreInOneDir(ChessItem item, int updateDir) {
             }
         }
         int thisScore = calcTypeScore(totalPoints, emptyPos, blockNum, isEmpty(ChessItem(item.cx, item.cy)));
-        score = max(score, thisScore);
+        score = score>thisScore?score:thisScore;
     }
     if (!score) {
         for (int i = 0; i <= 1; i++) {
@@ -266,6 +269,7 @@ int VirtualBoard::evalScoreInOneDir(ChessItem item, int updateDir) {
             }
         }
     }
+    return score;
 }
 
 int VirtualBoard::evalGlobalScore(ItemType itemType) const {
@@ -292,7 +296,7 @@ int VirtualBoard::evalGlobalScore(ItemType itemType) const {
 //            }
         }
     }
-    return maxScore[itemType] * 8 - maxScore[reverseItemType(itemType)];
+    return EVAL_BIAS*maxScore[itemType] - maxScore[reverseItemType(itemType)];
 }
 
 ItemType VirtualBoard::getComPointType() const {
@@ -342,6 +346,21 @@ void VirtualBoard::print(bool showScores) {
         cout << evalGlobalScore(BLACK) << " " << evalGlobalScore(WHITE) << endl;
     }
 }
+
+void VirtualBoard::clear() {
+    ChessBoard::clear();
+    blackScores.clear();
+    blackScores.resize(ChessBoardWidth);
+    for (int i = 0; i < ChessBoardWidth; i++) {
+        this->blackScores[i].resize(ChessBoardWidth);
+    }
+    whiteScores.clear();
+    whiteScores.resize(ChessBoardWidth);
+    for (int i = 0; i < ChessBoardWidth; i++) {
+        this->whiteScores[i].resize(ChessBoardWidth);
+    }
+}
+
 
 void Score::setDirScore(const int &dir, const int &score) {
     int delta = score - dirScore[dir];

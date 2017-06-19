@@ -3,17 +3,10 @@
 #endif
 
 #include "realboard.h"
+#include "chessboard.h"
 
 RealBoard::RealBoard(QWidget *parent) : QWidget(parent), ChessBoard() {
 
-}
-
-void RealBoard::clear() {
-    for (int i = 0; i < ChessBoardWidth; i++) {
-        for (int j = 0; j < ChessBoardWidth; j++) {
-            currentChessBoard[i][j] = EMPTY;
-        }
-    }
 }
 
 void RealBoard::paintEvent(QPaintEvent *e) {

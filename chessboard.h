@@ -8,8 +8,9 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 #include "constants.h"
-#include "ChessItem.h"
+#include "chessitem.h"
 
 using namespace std;
 const int ChessBoardWidth = 15;
@@ -24,18 +25,24 @@ public:
 
     ChessBoard &operator-=(const ChessItem &next);
 
-    const vector<vector<ItemType>> &getChessBoard() const {
+    const vector<vector<ItemType> > &getChessBoard() const {
         return currentChessBoard;
     }
 
-    bool isBlock(const ChessItem point)const;
+    bool isBlock(const ChessItem point) const;
 
-    bool isEmpty(const ChessItem point)const;
+    bool isEmpty(const ChessItem point) const;
 
-    bool isItem(const ChessItem point)const;
+    bool isItem(const ChessItem point) const;
+
+    static ItemType reverseItemType(ItemType itemType) {
+        return itemType == BLACK ? WHITE : BLACK;
+    }
+
+    virtual void clear();
 
 protected:
-    vector<vector<ItemType >> currentChessBoard;
+    vector<vector<ItemType> > currentChessBoard;
 
     void updateChess(int x, int y, ItemType val);
 

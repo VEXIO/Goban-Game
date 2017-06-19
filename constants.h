@@ -17,8 +17,8 @@ enum TypeScore {
     TWO = 100,
     THREE = 1000,
     BLOCKFOUR = 10000,
-    FOUR = 100000,
-    FIVE = 10000000
+    FOUR = 1000000,
+    FIVE = 100000000
 };
 
 const int MAX = 1000000000;

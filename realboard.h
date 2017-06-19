@@ -21,8 +21,6 @@ Q_OBJECT
 public:
     RealBoard(QWidget *parent = nullptr);
 
-    void clear();
-
     void play(bool isAIPlayer);
 
     void win(int winner);

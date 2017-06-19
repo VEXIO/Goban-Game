@@ -64,3 +64,10 @@ bool ChessBoard::isItem(const ChessItem point) const {
            currentChessBoard[point.cx][point.cy] != EMPTY;
 }
 
+void ChessBoard::clear() {
+    for (int i = 0; i < ChessBoardWidth; i++) {
+        for (int j = 0; j < ChessBoardWidth; j++) {
+            currentChessBoard[i][j] = EMPTY;
+        }
+    }
+}

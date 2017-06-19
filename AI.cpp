@@ -5,6 +5,7 @@
 #include <ctime>
 #include "AI.h"
 #include "helpers.h"
+#include "chessitem.h"
 
 ChessItem AI::getBestItem(const VirtualBoard &board) {
     vector<ChessItem> bestItems;
@@ -19,15 +20,16 @@ ChessItem AI::getBestItem(const VirtualBoard &board) {
         cout << item->cx << " " << item->cy << endl;
     }
 //
-    return bestItems[(int) (rand() % bestItems.size())];
+    ChessItem solution = bestItems[(int) (rand() % bestItems.size())];
+    solution.setPlayer(board.getComPointType());
+    return solution;
 }
 
 int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, ItemType itemType,
                 vector<ChessItem> &thisBestItems, vector<ChessItem> &steps) {
-    searchCount++;
 
     int pureScore = thisBoard.evalGlobalScore(itemType);
-    if (deep <= 0 || greaterOrEqualThan(pureScore, FOUR * 8)) {
+    if (deep <= 0 || greaterOrEqualThan(pureScore, FOUR*EVAL_BIAS)) {
         if (deep == DEEP) {
             thisBestItems = vector<ChessItem>{genCandidate(thisBoard, itemType).front()};
         }
@@ -48,21 +50,18 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
         VirtualBoard copyBoard(thisBoard);
         copyBoard += *candidate;
         //todo
-        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
-            cout << 1;
-        }
+//        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
+//            cout << 1;
+//        }
 //        cout<<deep<<" x:"<<candidate->cx<<" y:"<<candidate->cy<<endl;
         int score = -negaMax(copyBoard, deep - 1, -beta, -max(alpha, best),
                              VirtualBoard::reverseItemType(itemType), nextBestItems, steps);
 //        cout<<deep<<" x:"<<candidate->cx<<" y:"<<candidate->cy<<" "<<score<<endl;
-        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
-            cout << 1;
-        }
+//        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
+//            cout << 1;
+//        }
 
         candidate->score = score;
-//        if(score<-100000000){
-//            cout<<1;
-//        }
         if (greaterThan(score, best)) {
             best = score;
             steps[DEEP - deep] = *candidate;
@@ -71,16 +70,11 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
                 thisBestItems.push_back(*candidate);
             }
 
-            //todo
-//            if (deep == DEEP) {
-//                cout<<1;
-//            }
         } else if (equal(score, best) && deep == DEEP) {
             steps[DEEP - deep] = *candidate;
             thisBestItems.push_back(*candidate);
         }
         if (greaterOrEqualThan(best, beta)) {
-            ABcut++;
             break;
         }
     }

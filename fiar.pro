@@ -30,7 +30,8 @@ SOURCES += \
     chesscontroller.cpp \
     realboard.cpp \
     virtualboard.cpp \
-    chessitem.cpp
+    chessitem.cpp \
+    AI.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,10 @@ HEADERS += \
     chesscontroller.h \
     realboard.h \
     virtualboard.h \
-    chessitem.h
+    chessitem.h \
+    AI.h \
+    config.h \
+    constants.h
 
 FORMS +=
 

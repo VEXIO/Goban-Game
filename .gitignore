@@ -49,6 +49,10 @@
 *.pdb
 debug.cpp
 
+
+# fiar.pro
+fiar.pro.user*
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
@@ -90,3 +94,8 @@ dkms.conf
 *.out
 *.app
 
+bin/
+cmake-build-debug/
+debug.txt
+fiar.pro.user.dbb6ea3
+/Cmakelists.txt
