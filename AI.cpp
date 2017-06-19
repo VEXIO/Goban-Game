@@ -14,10 +14,12 @@ ChessItem AI::getBestItem(const VirtualBoard &board) {
     int score = negaMax(board, DEEP, MIN, MAX, board.getComPointType(), bestItems, steps);
     if (score < -FIVE * 0.8) {
         auto candidates = genCandidate(board, board.getComPointType());
-        return candidates.front();
+        auto item = candidates.front();
+        item.setPlayer(board.getComPointType());
+        return item;
     }
     for (auto item = bestItems.begin(); item != bestItems.end(); item++) {
-        cout << item->cx << " " << item->cy << endl;
+        // cout << item->cx << " " << item->cy << endl;
     }
 //
     ChessItem solution = bestItems[(int) (rand() % bestItems.size())];
@@ -45,6 +47,7 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
         thisBestItems.push_back(chessItem);
         return 0;
     }
+
     for (auto candidate = candidates.begin(); candidate != candidates.end(); candidate++) {
         candidate->setPlayer(itemType);
         VirtualBoard copyBoard(thisBoard);
@@ -78,8 +81,9 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
             break;
         }
     }
+    //
     if (deep == DEEP) {
-        cout << 1;
+        // cout << 1;
     }
     return best;
 }
