@@ -5,9 +5,10 @@
 #ifndef GOBANGAME_CHESSITEM_H
 #define GOBANGAME_CHESSITEM_H
 
-
 #include "constants.h"
 #include <iostream>
+#include <QtCore/QMetaType>
+
 using namespace std;
 class ChessItem {
 public:
@@ -48,6 +49,5 @@ public:
     //debug
     int score;
 };
-
 
 #endif //GOBANGAME_CHESSITEM_H
