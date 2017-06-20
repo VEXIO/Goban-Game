@@ -1,6 +1,4 @@
-﻿#include <QFuture>
-#include <QtConcurrent/QtConcurrent>
-#include "chesscontroller.h"
+﻿#include "chesscontroller.h"
 
 void ChessController::startGame(bool isAIPlayer) {
     this->isAIPlayer = isAIPlayer;
@@ -40,24 +38,24 @@ ChessItem ChessController::AIgo() {
     return nextItem;
 }
 
-
 void ChessController::nextStep(int cx, int cy) {
+    cout<<cx<<cy;
     if (!isPlaying) { return; }
     if (cx < 0 || cy < 0 || cx >= ChessBoardWidth || cy >= ChessBoardWidth) { return; }
     if (curChessBoard[cx][cy] != EMPTY) { return; }
-    if (isAIPlayer && currentPlayer == BLACK) {
+    if (isAIPlayer && currentPlayer == WHITE) {
         return;
     }
     nextStepItem.set(cx, cy, currentPlayer);
     cb += nextStepItem;
-    virtualBoard += nextStepItem;
+    virtualBoard+=nextStepItem;
 
     if (judge()) { return; }
     currentPlayer = ChessBoard::reverseItemType(currentPlayer);
     if (currentPlayer == WHITE && isAIPlayer) {
-        ChessItem nextItem = AIgo();
-        cb += nextItem;
-        virtualBoard += nextItem;
+        nextStepItem = AIgo();
+        cb += nextStepItem;
+        virtualBoard += nextStepItem;
         if (judge()) { return; }
         currentPlayer = ChessBoard::reverseItemType(currentPlayer);
     }

@@ -3,7 +3,6 @@
 //
 
 #include <QCoreApplication>
-#include <ctime>
 #include "AI.h"
 #include "helpers.h"
 
@@ -48,19 +47,9 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
         candidate->setPlayer(itemType);
        VirtualBoard copyBoard(thisBoard);
             copyBoard += *candidate;
-            //todo
-//        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
-//            cout << 1;
-//        }
-//        cout<<deep<<" x:"<<candidate->cx<<" y:"<<candidate->cy<<endl;
             int score = -negaMax(copyBoard, deep - 1, -beta, -max(alpha, best),
                                  VirtualBoard::reverseItemType(itemType), nextBestItems, steps);
-//        cout<<deep<<" x:"<<candidate->cx<<" y:"<<candidate->cy<<" "<<score<<endl;
-//        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
-//            cout << 1;
-//        }
 
-            candidate->score = score;
             if (greaterThan(score, best)) {
                 best = score;
                 steps[DEEP - deep] = *candidate;
@@ -77,6 +66,7 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
             break;
         }
     }
+    QCoreApplication::processEvents();
 
     return best;
 }

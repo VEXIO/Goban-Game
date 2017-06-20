@@ -47,8 +47,8 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
     float chessWidth = 0.95 * width;
     float topX = 17.f - width / 2 + (width - chessWidth) / 2;
     float topY = 107.f - width / 2 + (width - chessWidth) / 2;
-    float cx = e->x() - topX, cy = e->y() - topY - width*2;
-    int ccx = cx / width, ccy = cy / width;
+    float cx = e->x() - topX, cy = e->y() - topY - width;
+    int ccx = (cx) / width, ccy = (cy) / width;
     if (cx > ccx * width + chessWidth || cy > ccy * width + chessWidth) { return; }
     cc->nextStep(ccx, ccy);
     update();

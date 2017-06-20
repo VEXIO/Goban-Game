@@ -19,7 +19,6 @@ public:
     ChessItem(const int cx, const int cy, const ItemType player = EMPTY) : cx(cx), cy(cy), player(player) {}
 
     ChessItem(const int cx, const int cy, const int score, const ItemType player = EMPTY) : cx(cx), cy(cy),
-                                                                                            score(score),
                                                                                             player(player) {
         cout<<score;
     }
@@ -34,20 +33,9 @@ public:
         ChessItem::player = player;
     }
 
-    void reverse() {
-        if (player == BLACK) {
-            player = WHITE;
-        } else if (player == WHITE) {
-            player = BLACK;
-        }
-    }
-
     int cx;
     int cy;
     ItemType player;
-
-    //debug
-    int score;
 };
 
 #endif //GOBANGAME_CHESSITEM_H
