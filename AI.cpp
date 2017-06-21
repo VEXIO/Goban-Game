@@ -3,10 +3,8 @@
 //
 
 #include <QCoreApplication>
-#include <ctime>
 #include "AI.h"
 #include "helpers.h"
-#include "chessitem.h"
 
 ChessItem AI::getBestItem(const VirtualBoard &board) {
     vector<ChessItem> bestItems;
@@ -19,10 +17,6 @@ ChessItem AI::getBestItem(const VirtualBoard &board) {
         item.setPlayer(board.getComPointType());
         return item;
     }
-    for (auto item = bestItems.begin(); item != bestItems.end(); item++) {
-        // cout << item->cx << " " << item->cy << endl;
-    }
-//
     ChessItem solution = bestItems[(int) (rand() % bestItems.size())];
     solution.setPlayer(board.getComPointType());
     return solution;
@@ -51,24 +45,14 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
 
     for (auto candidate = candidates.begin(); candidate != candidates.end(); candidate++) {
         candidate->setPlayer(itemType);
-        VirtualBoard copyBoard(thisBoard);
-        copyBoard += *candidate;
-        //todo
-//        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
-//            cout << 1;
-//        }
-//        cout<<deep<<" x:"<<candidate->cx<<" y:"<<candidate->cy<<endl;
-        int score = -negaMax(copyBoard, deep - 1, -beta, -max(alpha, best),
-                             VirtualBoard::reverseItemType(itemType), nextBestItems, steps);
-//        cout<<deep<<" x:"<<candidate->cx<<" y:"<<candidate->cy<<" "<<score<<endl;
-//        if (candidate->cx == 7 && candidate->cy == 13 && deep == DEEP) {
-//            cout << 1;
-//        }
+       VirtualBoard copyBoard(thisBoard);
+            copyBoard += *candidate;
+            int score = -negaMax(copyBoard, deep - 1, -beta, -max(alpha, best),
+                                 VirtualBoard::reverseItemType(itemType), nextBestItems, steps);
 
-        candidate->score = score;
-        if (greaterThan(score, best)) {
-            best = score;
-            steps[DEEP - deep] = *candidate;
+            if (greaterThan(score, best)) {
+                best = score;
+                steps[DEEP - deep] = *candidate;
             if (deep == DEEP) {
                 thisBestItems.clear();
                 thisBestItems.push_back(*candidate);
@@ -82,12 +66,8 @@ int AI::negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, It
             break;
         }
     }
-
     QCoreApplication::processEvents();
 
-    if (deep == DEEP) {
-        // cout << 1;
-    }
     return best;
 }
 

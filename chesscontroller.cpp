@@ -1,9 +1,9 @@
-#include "chesscontroller.h"
+﻿#include "chesscontroller.h"
 
 void ChessController::startGame(bool isAIPlayer) {
     this->isAIPlayer = isAIPlayer;
     this->isPlaying = true;
-    this->currentPlayer = WHITE;
+    this->currentPlayer = BLACK;
     stepCnt = 0;
     virtualBoard.clear();
     cb.clear();
@@ -34,30 +34,28 @@ bool ChessController::judge() {
 }
 
 ChessItem ChessController::AIgo() {
-    ChessItem solution = ai.getBestItem(virtualBoard);
-    return solution;
+    ChessItem nextItem = AI::getBestItem(virtualBoard);
+    return nextItem;
 }
 
 void ChessController::nextStep(int cx, int cy) {
+    cout<<cx<<cy;
     if (!isPlaying) { return; }
     if (cx < 0 || cy < 0 || cx >= ChessBoardWidth || cy >= ChessBoardWidth) { return; }
     if (curChessBoard[cx][cy] != EMPTY) { return; }
+    if (isAIPlayer && currentPlayer == WHITE) {
+        return;
+    }
     nextStepItem.set(cx, cy, currentPlayer);
     cb += nextStepItem;
-    virtualBoard.set(nextStepItem);
-
-//    char str[30];
-//    sprintf(str, "%d %d", nextStepItem.cx, nextStepItem.cy);
-//    qInfo(str);
-
+    virtualBoard+=nextStepItem;
 
     if (judge()) { return; }
     currentPlayer = ChessBoard::reverseItemType(currentPlayer);
-    if (currentPlayer == BLACK && isAIPlayer) {
+    if (currentPlayer == WHITE && isAIPlayer) {
         nextStepItem = AIgo();
-
         cb += nextStepItem;
-        virtualBoard.set(nextStepItem);
+        virtualBoard += nextStepItem;
         if (judge()) { return; }
         currentPlayer = ChessBoard::reverseItemType(currentPlayer);
     }

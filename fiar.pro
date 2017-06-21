@@ -30,7 +30,6 @@ SOURCES += \
     chesscontroller.cpp \
     realboard.cpp \
     virtualboard.cpp \
-    chessitem.cpp \
     AI.cpp
 
 HEADERS += \

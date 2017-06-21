@@ -15,12 +15,13 @@
 
 class AI {
 public:
-    ChessItem getBestItem(const VirtualBoard &board);
+    static ChessItem getBestItem(const VirtualBoard &board);
 
-    int negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, ItemType itemType, vector<ChessItem> &thisBestItems,vector<ChessItem>& steps);
+    static int negaMax(const VirtualBoard &thisBoard, int deep, int alpha, int beta, ItemType itemType, vector<ChessItem> &thisBestItems,vector<ChessItem>& steps);
 
 private:
-    list<ChessItem> genCandidate(const VirtualBoard &thisBoard,ItemType itemType);
+    static list<ChessItem> genCandidate(const VirtualBoard &thisBoard,ItemType itemType);
+
 };
 
 
