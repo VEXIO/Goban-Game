@@ -17,21 +17,21 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowFlags(Qt::WindowMinimizeButtonHint);
     setFixedSize(485, 600);
     // chessboard 490 557
-    setWindowTitle(tr("Îå×ÓÆåÓÎÏ·"));
+    setWindowTitle(tr("äº”å­æ£‹æ¸¸æˆ"));
 
-    humanPlayAction = new QAction("Ë«ÈËÓÎÏ·", this);
+    humanPlayAction = new QAction("åŒäººæ¸¸æˆ", this);
     humanPlayAction->setShortcuts(QKeySequence::New); // Ctrl+N
     connect(humanPlayAction, &QAction::triggered, this, &MainWindow::startHuman);
 
-    AIPlayAction = new QAction("ÈË»ú¶ÔÕ½", this);
+    AIPlayAction = new QAction("äººæœºå¯¹æˆ˜", this);
     AIPlayAction->setShortcuts(QKeySequence::SelectAll); // Ctrl+A
     connect(AIPlayAction, &QAction::triggered, this, &MainWindow::startAI);
 
-    QMenu *file = menuBar()->addMenu(tr("&¿ªÊ¼"));
+    QMenu *file = menuBar()->addMenu(tr("&å¼€å§‹"));
     file->addAction(humanPlayAction);
     file->addAction(AIPlayAction);
 
-    QToolBar *toolBar = addToolBar(tr("&¿ªÊ¼"));
+    QToolBar *toolBar = addToolBar(tr("&å¼€å§‹"));
     toolBar->addAction(humanPlayAction);
     toolBar->addAction(AIPlayAction);
 
@@ -55,12 +55,12 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
 }
 
 void MainWindow::startHuman() {
-    QMessageBox::information(this, tr("Information"), tr("¿ªÊ¼Ë«ÈËÓÎÏ·"));
+    QMessageBox::information(this, tr("Information"), tr("å¼€å§‹åŒäººæ¸¸æˆ"));
     cc->startGame(false);
 }
 
 void MainWindow::startAI() {
-    QMessageBox::information(this, tr("Information"), tr("¿ªÊ¼ÈË»ú¶ÔÕ½"));
+    QMessageBox::information(this, tr("Information"), tr("å¼€å§‹äººæœºå¯¹æˆ˜"));
     cc->startGame(true);
 }
 
