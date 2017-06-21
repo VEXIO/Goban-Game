@@ -35,29 +35,29 @@ void RealBoard::paintEvent(QPaintEvent *e) {
 
     if (this->gameStatus) {
         // game is playing
-        dispText = "ÓÎÏ·½øĞĞÖĞ...";
+        dispText = "æ¸¸æˆè¿›è¡Œä¸­...";
     } else {
         // game ends
         if (this->winner == -1) {
-            dispText = "ÓÎÏ·Î´¿ªÊ¼£¬Çëµã»÷ÉÏ·½°´Å¥¿ªÊ¼ÓÎÏ·¡£";
+            dispText = "æ¸¸æˆæœªå¼€å§‹ï¼Œè¯·ç‚¹å‡»ä¸Šæ–¹æŒ‰é’®å¼€å§‹æ¸¸æˆã€‚";
         } else {
             if (this->winner == 1) {
                 // 1P wins
                 if (this->isAI) {
                     // AI losses
-                    dispText = "ÄãÓ®ÁË£¡";
+                    dispText = "ä½ èµ¢äº†ï¼";
                 } else {
                     // human 1P wins
-                    dispText = "Íæ¼Ò1Ê¤Àû£¡";
+                    dispText = "ç©å®¶1èƒœåˆ©ï¼";
                 }
             } else {
                 // 2P wins
                 if (this->isAI) {
                     // AI wins
-                    dispText = "ÄãÊäÁË£¡";
+                    dispText = "ä½ è¾“äº†ï¼";
                 } else {
                     // human 2P wins
-                    dispText = "Íæ¼Ò2Ê¤Àû£¡";
+                    dispText = "ç©å®¶2èƒœåˆ©ï¼";
                 }
             }
         }
