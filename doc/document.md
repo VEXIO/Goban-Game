@@ -4,7 +4,7 @@
 
 - 总功能： 通过图形界面，用户可以通过本游戏程序进行五子棋游戏的双人游戏或者人机对战，游戏程序可以正确判断出游戏的胜负
 - 开发工具为 C++ （语言标准为C++11）语言，使用了QT库以实现图形和跨平台
-- 总体的设计思路如下：（此处有图）
+- 总体的设计思路如下：
     总体的架构采用了 MVC（Model-View—Controller）模式，Model 为 ChessBoard 类，View 为 MainWindow 类，Controller 为 ChessController 类。 
 
 ## 二、模块功能
@@ -35,9 +35,6 @@
 
 
 ## 三、类之间的关系和模块间接口
-
-    （此处有图）
-
 -   `MainWindows`
 
     ```C++
@@ -96,12 +93,14 @@
     ```C++
     ChessBoard &operator-=(const ChessItem &next);
     ```
+
     重载-=操作符，用于在棋盘上移除一个棋子
 
 
     ​```C++
     bool isBlock(const ChessItem point) const;
     ​```
+    
     用于判断棋子是否越出棋盘的界或者出现在已被占用的地方
     
     ​```C++
@@ -120,6 +119,7 @@
     虚函数，清空整个棋盘
     
     以下为protected：
+
     ​```C++
     void updateChess(int x, int y, ItemType val);
     ​```
@@ -182,18 +182,20 @@
     在画布上绘制棋子
 
 -   数据结构
-    1. ItemType
+    1. `ItemType`
 
-    枚举类型，用于表示棋盘上每个位置的状态是黑子还是白子或者是空。
+        枚举类型，用于表示棋盘上每个位置的状态是黑子还是白子或者是空。
 
-    2. TypeScore
+    2. `TypeScore`
 
-    枚举类型，用于定义每种棋型对应的分数。
+        枚举类型，用于定义每种棋型对应的分数。
+
+    3. `vector<vector<T>>`
+
+        类似于一个二维数组，用于存储 15 * 15 棋盘中的信息，例如棋子还有各个位置的估值分数。
 
 
 ## 四、设计思路
-- 架构
-    * 架构采用 MVC 模式，Model 类为 `ChessBoard`，`VirtualBoard`；View 类为 `MainWindow` 和 `RealBoard`；Controller 类为 `ChessController` 和  `RealBoard`。此处的 `RealBoard` 较为特殊，身兼 Model 和 View 类两职，因为它存着实际显示的棋子布局，所以棋子的绘制也交由它来处理
 - UI
     * 棋盘数据使用了 `vector<vector<ItemType>>` 进行存储，而在 `VirtualBoard` 内
     * 棋盘实际上是一个贴图，路径在 `/resources/chessBoard.png` 下。
@@ -209,33 +211,48 @@
     * 为了保证 `AI` 的性能，我们将搜索的深度定为 4 。 
 - 算法
     * AI的伪代码如下：
-    ```python
-    negaMax(board, depth, alpha, beta) {
-        score = board.evalation();
-        if (depth <= 0 || score > threshold) {
-            //达到了搜索深度或者阈值（胜率很高)
-            return score;
-        }
-        best = MIN;
+        ```
+        negaMax(board, depth, alpha, beta) {
+            score = board.evalation();
+            if (depth <= 0 || score > threshold) {
+                //达到了搜索深度或者阈值（胜率很高)
+                return score;
+            }
+            best = MIN;
 
-        for(candidate: candidates) {
-            board += candidates;
-            // this is why it is called negaMax
-            // dfs procedure
-            nextScore = negaMax(board, depth - 1, - beta, -max(alpha, best));
-            board -= cadidates;
-            if (nextScore >= best) {
-                best = nextScore;
-                clear resultList;
-                add candidate to resultList;
-            }
-            ...
-            some special cases 
-            ...
-            // alpha-beta pruning
-            if (best >= beat) {
-                break;
+            for(candidate: candidates) {
+                board += candidates;
+                // this is why it is called negaMax
+                // dfs procedure
+                nextScore = negaMax(board, depth - 1, - beta, -max(alpha, best));
+                board -= cadidates;
+                if (nextScore >= best) {
+                    best = nextScore;
+                    clear resultList;
+                    add candidate to resultList;
+                }
+                ...
+                some special cases 
+                ...
+                // alpha-beta pruning
+                if (best >= beta) {
+                    break;
+                }
             }
         }
-    }
-    ```
+        ```
+
+## 五、整体架构
+
+![relation](relation.png)
+
+* 整体架构 
+    采用 MVC 模式，Model 类为 `ChessBoard`，`VirtualBoard`；View 类为 `MainWindow` 和 `RealBoard`；Controller 类为 `ChessController` 和  `RealBoard`。此处的 `RealBoard` 较为特殊，身兼 Model 和 View 类两职，因为它存着实际显示的棋子布局，所以棋子的绘制也交由它来处理
+* MVC 是一种较为常见的软件架构，但是由于project的规模较小和功能并不复杂，所以各个部件的还是有相当的耦合。
+
+## 六、测试结果
+* 双人对战（玩家一先手执黑）
+
+* 人机对战（玩家先手执黑）
+
+
