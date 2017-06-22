@@ -22,17 +22,17 @@
     - 判断一个即将添加进棋盘的棋子是否越界或者重复
     - 对于`VirtualBoard` 子类，还需提供整个棋盘的估值函数，保存AI预测的下法
     - 对于`RealBoard` 子类，还需绘制整个棋盘内的每个棋子
-    
+
 - ChessController
     - 绑定 RealBoard 和 VirtualBoard 实例
     - 管理游戏的状态，开始和结束游戏等
     - 判断游戏的输赢
     - 接受转换过的点击时间，添加棋子进棋盘内
     - 提供AI的下一步走法
-    
+
 - AI
     - 根据当前棋盘的形势给出下一步的最优解
-    
+
 
 ## 三、类之间的关系和模块间接口
 
@@ -45,7 +45,7 @@
     void chessInstance(ChessController *cc);
     ```
     这个接口用于绑定 ChessConroller 实例
-    
+
 -   `ChessController`
 
     ```C++
@@ -99,40 +99,40 @@
     重载-=操作符，用于在棋盘上移除一个棋子
 
 
-    ```C++
+    ​```C++
     bool isBlock(const ChessItem point) const;
-    ```
+    ​```
     用于判断棋子是否越出棋盘的界或者出现在已被占用的地方
-
-    ```C++
+    
+    ​```C++
     bool isEmpty(const ChessItem point) const;
-    ```
+    ​```
     判断棋盘的这个位置是否是空的
-
-    ```C++
+    
+    ​```C++
     bool isItem(const ChessItem point) const;
-    ```
+    ​```
     判断棋盘的这个位置是否有棋子
-
-    ```C++
+    
+    ​```C++
     virtual void clear();
-    ```
+    ​```
     虚函数，清空整个棋盘
-
+    
     以下为protected：
-    ```C++
+    ​```C++
     void updateChess(int x, int y, ItemType val);
-    ```
+    ​```
     在棋盘的对应位置放置棋子（不做任何检查）
-
-    ```C++
+    
+    ​```C++
     virtual void set(const ChessItem &next);
-    ```
+    ​```
     +=操作符的具体实现（检查棋盘的位置是否为空）
-
-    ```C++
+    
+    ​```C++
     void remove(const ChessItem &next);
-    ```
+    ​```
     -=操作符的具体实现（不做任何检查）
 
 -   ```VirtualBoard: ChessBoard```
@@ -165,7 +165,7 @@
 
 -   ```RealBoard : public QWidget, public ChessBoard```
     因为这是个控制棋盘显示的控件，所以还继承自QWidget
-    
+
     ```C++
     void play(bool isAIPlayer);
     ```
@@ -180,7 +180,7 @@
     void paintEvent(QPaintEvent *e);
     ```
     在画布上绘制棋子
-    
+
 -   数据结构
     1. ItemType
 
@@ -188,7 +188,7 @@
 
     2. TypeScore
 
-    枚举类型，用于定义每种情况下分数
+    枚举类型，用于定义每种棋型对应的分数。
 
 
 ## 四、设计思路
@@ -197,13 +197,13 @@
 - UI
     * 棋盘数据使用了 `vector<vector<ItemType>>` 进行存储，而在 `VirtualBoard` 内
     * 棋盘实际上是一个贴图，路径在 `/resources/chessBoard.png` 下。
-    同时，MainWindow还会监听鼠标的点击释放事件，并且经过换算后转换为棋盘上的具体位置。但是棋盘中的棋子并不在 MainWindow 中绘制。
+      同时，MainWindow还会监听鼠标的点击释放事件，并且经过换算后转换为棋盘上的具体位置。但是棋盘中的棋子并不在 MainWindow 中绘制。
 - 分模块
     * `ChessBoard` 是 Model 中负责记录当前棋盘数据的类。在内部使用了 `vector<vector<ItemType>>` （类似于一个二维数组）来表示棋盘里的黑白棋子和空位。
-    `ChessBoard` 有两个子类，分别为 `RealBoard` 和 `VirtualBorad`, `RealBoard` 是 `ChessController` 中持有的实际棋盘，负责绘制棋盘中的棋子以及显示当前的游戏状态。`VirtualBoard` 则是提供给AI模块用来预先演算 5 - 6 步的棋盘以及供AI估算当前局面的双方分数。
+      `ChessBoard` 有两个子类，分别为 `RealBoard` 和 `VirtualBorad`, `RealBoard` 是 `ChessController` 中持有的实际棋盘，负责绘制棋盘中的棋子以及显示当前的游戏状态。`VirtualBoard` 则是提供给AI模块用来预先演算 5 - 6 步的棋盘以及供AI估算当前局面的双方分数。
     * `ChessController` 扮演了 Controller 角色, 它持有了两个棋盘的私有成员变量： `RealBoard` 和 `VirtualBoard`。`ChessController` 负责控制游戏的状态，包括判断游戏是否到达终止条件（即有一方获得胜利）以及确定当前下的棋子的颜色等。
     * `AI` 模块是本游戏中最复杂的模块，算法上使用了 `negaMax` 和 估值函数（位于 `VirtualBoard` 中） 以及 `alpha-beta` 剪枝 。
-    `negaMax` 是一种 `minMax` 算法在零和游戏中的变种。由于零和游戏的性质，对一方有利的一步会对另一方不利。`negaMax` 相对 `minMax` 的改进在于，剪枝和搜寻对于玩家和AI双方都是可用的，所以一个函数可以既用来预测玩家的下一步，也可以运算AI的下一步。估值函数由于和当前棋盘的局面有关，所以定义为 `VirtualBoard` 的成员函数。`alpha-beta` 剪枝可以通过剪去比已经搜索过的节点更坏的节点来减少DFS搜索树时节点的个数，这个剪枝在AI预测玩家的策略时也会用上。在当前的设置中，`negaMax` 的搜索深度定义在 `config.h` 中（`DEEP` = 4），即AI会预测 `DEEP` 步。
+      `negaMax` 是一种 `minMax` 算法在零和游戏中的变种。由于零和游戏的性质，对一方有利的一步会对另一方不利。`negaMax` 相对 `minMax` 的改进在于，剪枝和搜寻对于玩家和AI双方都是可用的，所以一个函数可以既用来预测玩家的下一步，也可以运算AI的下一步。估值函数由于和当前棋盘的局面有关，所以定义为 `VirtualBoard` 的成员函数。`alpha-beta` 剪枝可以通过剪去比已经搜索过的节点更坏的节点来减少DFS搜索树时节点的个数，这个剪枝在AI预测玩家的策略时也会用上。在当前的设置中，`negaMax` 的搜索深度定义在 `config.h` 中（`DEEP` = 4），即AI会预测 `DEEP/`步（玩家和AI各DEEP/2步） 。
 - 性能
     * `AI` 模块在运算时较为耗时，为了不阻塞UI的绘制工作，在每次执行 `nagaMax` 的末尾，都会调用一次`QCoreApplication::processEvents()` 来执行当前正在等待的事件。
     * 为了保证 `AI` 的性能，我们将搜索的深度定为 4 。 
@@ -226,7 +226,8 @@
             board -= cadidates;
             if (nextScore >= best) {
                 best = nextScore;
-                add candidates to resultList;
+                clear resultList;
+                add candidate to resultList;
             }
             ...
             some special cases 
