@@ -41,6 +41,7 @@ void RealBoard::mouseReleaseEvent(QMouseEvent *e) {
 void RealBoard::paintEvent(QPaintEvent *e) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
+    p.setFont(QFont(NULL, 18));
 
     // draw chess board table
 
@@ -93,7 +94,7 @@ void RealBoard::paintEvent(QPaintEvent *e) {
             }
         }
     }
-    p.drawText(55, 45, QString(dispText.c_str()));
+    p.drawText(80, 55, QString(dispText.c_str()));
 }
 
 
