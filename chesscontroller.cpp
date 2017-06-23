@@ -50,6 +50,8 @@ void ChessController::nextStep(int cx, int cy) {
     cb += nextStepItem;
     virtualBoard+=nextStepItem;
 
+    cb.update();
+
     if (judge()) { return; }
     currentPlayer = ChessBoard::reverseItemType(currentPlayer);
     if (currentPlayer == WHITE && isAIPlayer) {
