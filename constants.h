@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/17.
-//
-
 #ifndef GOBANGAME_CONSTANTS_H
 #define GOBANGAME_CONSTANTS_H
 

@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/17.
-//
-
 #include "virtualboard.h"
 #include "config.h"
 #include "chessboard.h"

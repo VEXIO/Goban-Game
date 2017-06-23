@@ -1,11 +1,18 @@
 # 五子棋游戏设计报告
 
+## 组员：
+* 柳昊天 3150105318
+* 任意 3150103692
+* 赖杰文 3150105192
+* 吴越 3150101992
+
 ## 一、总概述
 
 - 总功能： 通过图形界面，用户可以通过本游戏程序进行五子棋游戏的双人游戏或者人机对战，游戏程序可以正确判断出游戏的胜负
 - 开发工具为 C++ （语言标准为C++11）语言，使用了QT库以实现图形和跨平台
 - 总体的设计思路如下：
     总体的架构采用了 MVC（Model-View—Controller）模式，Model 为 ChessBoard 类，View 为 MainWindow 类，Controller 为 ChessController 类。 
+- 命名规则统一使用驼峰命名法，缩进为 4 空格，中文部分编码为 UTF-8 
 
 ## 二、模块功能
 
@@ -253,6 +260,33 @@
 ## 六、测试结果
 * 双人对战（玩家一先手执黑）
 
+![human1](human1.png)
+
+![human2](human2.png)
+
+玩家2获胜，游戏正确判断正负并终止游戏
+
 * 人机对战（玩家先手执黑）
+
+![AI1](AI1.png)
+
+AI模式开始
+
+![AI2](AI2.png)
+
+和AI的开局
+
+![AI3](AI3.png)
+
+AI获胜，游戏正常结束，AI的运算速度很快
+
+## 七、组员分工
+
+- 柳昊天： View部分，`MainWindow`等
+- 任意：AI部分， `AI`, `VirtualBoard`等
+- 赖杰文：Controller部分， `ChessController`等
+- 吴越： Model部分，`ChessBoard`等
+
+
 
 

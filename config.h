@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/18.
-//
-
 #ifndef GOBANGAME_CONFIG_H
 #define GOBANGAME_CONFIG_H
 

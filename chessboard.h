@@ -1,8 +1,4 @@
-﻿//
-// Created by RenYi on 2017/6/17.
-//
-
-#ifndef WIDGET_CHESSBOARD_H
+﻿#ifndef WIDGET_CHESSBOARD_H
 #define WIDGET_CHESSBOARD_H
 
 

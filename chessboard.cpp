@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/17.
-//
-
 #include "chessboard.h"
 
 ChessBoard::ChessBoard() {

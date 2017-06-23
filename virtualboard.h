@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/17.
-//
-
 #ifndef WIDGET_VIRTUALBOARD_H
 #define WIDGET_VIRTUALBOARD_H
 

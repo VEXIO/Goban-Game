@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/17.
-//
-
 #ifndef GOBANGAME_AI_H
 #define GOBANGAME_AI_H
 

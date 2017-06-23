@@ -1,7 +1,3 @@
-//
-// Created by RenYi on 2017/6/18.
-//
-
 #ifndef HELPERS_H_
 #define HELPERS_H_
 
