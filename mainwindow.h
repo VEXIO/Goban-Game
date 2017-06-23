@@ -17,9 +17,6 @@ public:
     void chessInstance(ChessController *cc) { this->cc = cc; }
     ~MainWindow();
 
-protected:
-    //void mouseReleaseEvent(QMouseEvent *e);
-
 private:
     void startHuman();
     void startAI();
