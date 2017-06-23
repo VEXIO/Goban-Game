@@ -4,6 +4,7 @@
 
 #include "realboard.h"
 #include "chessboard.h"
+#include <QMouseEvent>
 
 RealBoard::RealBoard(QWidget *parent) : QWidget(parent), ChessBoard() {
     width = 40;
@@ -22,6 +23,19 @@ RealBoard::RealBoard(QWidget *parent) : QWidget(parent), ChessBoard() {
             grids.push_back(temp);
         }
     }
+}
+
+void RealBoard::mouseReleaseEvent(QMouseEvent *e) {
+    float width = 40.f;
+    float chessWidth = .8f * width;
+    float topX = 80.f - width / 2 + (width - chessWidth) / 2;
+    float topY = 100.f - width / 2 + (width - chessWidth) / 2;
+    float cx = e->x() - topX, cy = e->y() - topY;
+    if (cx < 0 || cy < 0) { return; }
+    int ccx = (cx) / width, ccy = (cy) / width;
+    if (cx > ccx * width + chessWidth || cy > ccy * width + chessWidth) { return; }
+    cc->nextStep(ccx, ccy);
+    update();
 }
 
 void RealBoard::paintEvent(QPaintEvent *e) {

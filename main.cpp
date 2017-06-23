@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     RealBoard cb;
     ChessController cc(cb);
+    cb.linkCC(&cc);
     w.setCentralWidget(&cb); // link chessboard display widget
     w.chessInstance(&cc); // link chess controller
     w.show();

@@ -42,18 +42,18 @@ MainWindow::MainWindow(QWidget *parent) :
                           "}");
 }
 
-void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
-    float width = 40.f;
-    float chessWidth = .8f * width;
-    float topX = 80.f - width / 2 + (width - chessWidth) / 2;
-    float topY = 100.f - width / 2 + (width - chessWidth) / 2 + toolBar->iconSize().height();
-    float cx = e->x() - topX, cy = e->y() - topY;
-    if (cx < 0 || cy < 0) { return; }
-    int ccx = (cx) / width, ccy = (cy) / width;
-    if (cx > ccx * width + chessWidth || cy > ccy * width + chessWidth) { return; }
-    cc->nextStep(ccx, ccy);
-    update();
-}
+//void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
+//    float width = 40.f;
+//    float chessWidth = .8f * width;
+//    float topX = 80.f - width / 2 + (width - chessWidth) / 2;
+//    float topY = 100.f - width / 2 + (width - chessWidth) / 2 + toolBar->iconSize().height();
+//    float cx = e->x() - topX, cy = e->y() - topY;
+//    if (cx < 0 || cy < 0) { return; }
+//    int ccx = (cx) / width, ccy = (cy) / width;
+//    if (cx > ccx * width + chessWidth || cy > ccy * width + chessWidth) { return; }
+//    cc->nextStep(ccx, ccy);
+//    update();
+//}
 
 void MainWindow::startHuman() {
     QMessageBox::information(this, tr("Information"), tr("开始双人游戏"));

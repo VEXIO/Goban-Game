@@ -18,7 +18,7 @@ public:
     ~MainWindow();
 
 protected:
-    void mouseReleaseEvent(QMouseEvent *e);
+    //void mouseReleaseEvent(QMouseEvent *e);
 
 private:
     void startHuman();
