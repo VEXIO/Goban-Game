@@ -23,6 +23,7 @@ protected:
 private:
     void startHuman();
     void startAI();
+    QToolBar *toolBar;
     ChessController *cc;
     QAction *humanPlayAction, *AIPlayAction;
 };

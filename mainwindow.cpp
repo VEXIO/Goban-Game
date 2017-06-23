@@ -9,14 +9,14 @@
 #include <QMessageBox>
 #include <QToolBar>
 #include <QMouseEvent>
+#include <iostream>
 
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent) {
     setWindowFlags(Qt::WindowMinimizeButtonHint);
-    setFixedSize(485, 600);
-    // chessboard 490 557
+    setFixedSize(930, 730);
     setWindowTitle(tr("五子棋游戏"));
 
     humanPlayAction = new QAction("双人游戏", this);
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     file->addAction(humanPlayAction);
     file->addAction(AIPlayAction);
 
-    QToolBar *toolBar = addToolBar(tr("&开始"));
+    toolBar = addToolBar(tr("&开始"));
     toolBar->addAction(humanPlayAction);
     toolBar->addAction(AIPlayAction);
 
@@ -43,11 +43,12 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
-    float width = 32.2;
-    float chessWidth = 0.95 * width;
-    float topX = 17.f - width / 2 + (width - chessWidth) / 2;
-    float topY = 107.f - width / 2 + (width - chessWidth) / 2;
-    float cx = e->x() - topX, cy = e->y() - topY - width;
+    float width = 40.f;
+    float chessWidth = .8f * width;
+    float topX = 80.f - width / 2 + (width - chessWidth) / 2;
+    float topY = 100.f - width / 2 + (width - chessWidth) / 2 + toolBar->iconSize().height();
+    float cx = e->x() - topX, cy = e->y() - topY;
+    if (cx < 0 || cy < 0) { return; }
     int ccx = (cx) / width, ccy = (cy) / width;
     if (cx > ccx * width + chessWidth || cy > ccy * width + chessWidth) { return; }
     cc->nextStep(ccx, ccy);

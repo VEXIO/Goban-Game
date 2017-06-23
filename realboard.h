@@ -31,6 +31,10 @@ private:
     bool gameStatus = false, isAI;
     int winner = -1;
 
+    QVector<QRect> grids;
+
+    float width, chessWidth, topX, topY;
+
     string dispText;
 };
 

@@ -6,18 +6,35 @@
 #include "chessboard.h"
 
 RealBoard::RealBoard(QWidget *parent) : QWidget(parent), ChessBoard() {
+    width = 40;
+    chessWidth = width * 0.8;
+    topX = 80.f;
+    topY = 100.f;
+    QRect temp;
 
+    float tx, ty;
+
+    for (int i = 0; i < ChessBoardWidth - 1; i++) {
+        for (int j = 0; j < ChessBoardWidth - 1; j++) {
+            tx = topX + width * i;
+            ty = topY + width * j;
+            temp.setCoords(tx, ty, tx + width, ty + width);
+            grids.push_back(temp);
+        }
+    }
 }
 
 void RealBoard::paintEvent(QPaintEvent *e) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
-    float width = 32.2;
-    float chessWidth = width * 0.8;
-    float topX = 17.f - width / 2 + (width - chessWidth) / 2;
-    float topY = 107.f - width / 2 + (width - chessWidth) / 2;
 
-    // draw chessboard
+    // draw chess board table
+
+    p.drawRects(grids);
+
+    topX = 80.f - width / 2 + (width - chessWidth) / 2;
+    topY = 100.f - width / 2 + (width - chessWidth) / 2;
+    // draw chess
     for (int i = 0; i < ChessBoardWidth; i++) {
         for (int j = 0; j < ChessBoardWidth; j++) {
             if (this->currentChessBoard[i][j] == EMPTY) {
@@ -62,7 +79,7 @@ void RealBoard::paintEvent(QPaintEvent *e) {
             }
         }
     }
-    p.drawText(5, 15, QString(dispText.c_str()));
+    p.drawText(55, 45, QString(dispText.c_str()));
 }
 
 
