@@ -253,6 +253,12 @@
 
 ![relation](relation.png)
 
+模块间联系
+
+![UML](UML.png)
+
+类之间的继承关系
+
 * 整体架构 
     采用 MVC 模式，Model 类为 `ChessBoard`，`VirtualBoard`；View 类为 `MainWindow` 和 `RealBoard`；Controller 类为 `ChessController` 和  `RealBoard`。此处的 `RealBoard` 较为特殊，身兼 Model 和 View 类两职，因为它存着实际显示的棋子布局，所以棋子的绘制也交由它来处理
 * MVC 是一种较为常见的软件架构，但是由于project的规模较小和功能并不复杂，所以各个部件的还是有相当的耦合。
